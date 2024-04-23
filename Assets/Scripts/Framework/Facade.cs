@@ -6,7 +6,7 @@ namespace Framework
     {
         public static void SayHello()
         {
-            Debug.LogError($" Facade : Hello");
+            Debug.Log($"Framework::Facade::Say Hello");
         }
     }
 }

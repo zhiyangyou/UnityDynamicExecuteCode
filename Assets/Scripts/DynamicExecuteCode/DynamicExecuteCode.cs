@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class DynamicRoslynCompiler
 {
@@ -114,7 +116,7 @@ public class DynamicRoslynCompiler
             Type type = assembly.GetType("DynamicNamespace.DynamicClass");
             MethodInfo method = type.GetMethod("DynamicMethod");
             var ret = method.Invoke(null, null);
-            Debug.LogError($"ret is {ret}");
+            Debug.Log($"dynamic call ret is {ret}");
         }
     }
 }
@@ -122,16 +124,50 @@ public class DynamicRoslynCompiler
 
 public class DynamicExecuteCode : MonoBehaviour
 {
+    static void CostTime(Action ac, string name = "")
+    {
+        var sw = new Stopwatch();
+        sw.Start();
+        try
+        {
+            ac();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($" Do {name} error ");
+            Debug.LogException(e);
+        }
+        finally
+        {
+            sw.Stop();
+            Debug.Log($"Do {name} cost time: {sw.ElapsedMilliseconds}ms");
+        }
+    }
+
+    static string GetRealAssetPath(string assetPath)
+    {
+        var basePath = Application.dataPath.Replace("Assets", "");
+        return Path.Combine(basePath, assetPath);
+    }
+
     static void DoExecute()
     {
-        var text = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Scripts/DynamicExecuteCode/TemplateCode.cs");
-        string code = text.text;
-        DynamicRoslynCompiler.CompileAndRun(code);
+        string filePath = GetRealAssetPath("Assets/Scripts/DynamicExecuteCode/TemplateCode.cs");
+        string code = "";
+        CostTime(() => { code = File.ReadAllText(filePath); }, $"加载代码文件:{filePath}");
+        CostTime(() => { DynamicRoslynCompiler.CompileAndRun(code); }, $"动态编译:{filePath}");
+    }
+
+    private void OnGUI()
+    {
+        if (GUI.Button(new Rect(200, 200, 200, 200), "动态执行代码"))
+        {
+            DoExecute();
+        }
     }
 
     void Update()
     {
-        DoExecute();
-        Debug.LogError("  333  ");
+        // Debug.LogError("  333  ");
     }
 }
