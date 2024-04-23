@@ -8,7 +8,7 @@ namespace DynamicNamespace
         public static int DynamicMethod()
         {
             Facade.SayHello();
-            Debug.Log("'Facade.SayHello()' do complete!>>>>>>>>>>>>");
+            Debug.Log("'Facade.SayHello()' do complete33333333333@@");
             int a = 3;
             int b = 2;
             var ret = a + b;

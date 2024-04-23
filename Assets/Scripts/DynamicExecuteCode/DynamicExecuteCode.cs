@@ -146,13 +146,13 @@ public class DynamicExecuteCode : MonoBehaviour
 
     static string GetRealAssetPath(string assetPath)
     {
-        var basePath = Application.dataPath.Replace("Assets", "");
+        var basePath = new DirectoryInfo(Application.dataPath).Parent.FullName;
         return Path.Combine(basePath, assetPath);
     }
 
     static void DoExecute()
     {
-        string filePath = GetRealAssetPath("Assets/Scripts/DynamicExecuteCode/TemplateCode.cs");
+        string filePath = GetRealAssetPath("TemplateCode.txt");
         string code = "";
         CostTime(() => { code = File.ReadAllText(filePath); }, $"加载代码文件:{filePath}");
         CostTime(() => { DynamicRoslynCompiler.CompileAndRun(code); }, $"动态编译:{filePath}");
