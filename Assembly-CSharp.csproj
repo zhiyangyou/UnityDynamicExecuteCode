@@ -325,23 +325,11 @@
      <Reference Include="nunit.framework">
      <HintPath>I:\__workSpace\_Github\DynamiExecuteCode\DynamiExecuteCode\Library\PackageCache\com.unity.ext.nunit@2.0.3\net40\unity-custom\nunit.framework.dll</HintPath>
      </Reference>
-     <Reference Include="System.Collections.Immutable">
-     <HintPath>I:\__workSpace\_Github\DynamiExecuteCode\DynamiExecuteCode\Assets\Plugins\System.Collections.Immutable.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
      <HintPath>I:\__workSpace\_Github\DynamiExecuteCode\DynamiExecuteCode\Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
      </Reference>
-     <Reference Include="Microsoft.CodeAnalysis.CSharp">
-     <HintPath>I:\__workSpace\_Github\DynamiExecuteCode\DynamiExecuteCode\Assets\Plugins\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
-     </Reference>
-     <Reference Include="Microsoft.CodeAnalysis">
-     <HintPath>I:\__workSpace\_Github\DynamiExecuteCode\DynamiExecuteCode\Assets\Plugins\Microsoft.CodeAnalysis.dll</HintPath>
-     </Reference>
      <Reference Include="System.Runtime.CompilerServices.Unsafe">
-     <HintPath>I:\__workSpace\_Github\DynamiExecuteCode\DynamiExecuteCode\Assets\Plugins\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-     </Reference>
-     <Reference Include="System.Reflection.Metadata">
-     <HintPath>I:\__workSpace\_Github\DynamiExecuteCode\DynamiExecuteCode\Assets\Plugins\System.Reflection.Metadata.dll</HintPath>
+     <HintPath>I:\__workSpace\_Github\DynamiExecuteCode\DynamiExecuteCode\Assets\Plugins\FSR\Plugins\Roslyn\2021+\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
      </Reference>
      <Reference Include="netstandard">
      <HintPath>F:\_UnityWorkSpace\UnityInstall\2023.1.17f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>

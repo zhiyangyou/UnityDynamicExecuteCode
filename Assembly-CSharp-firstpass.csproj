@@ -41,7 +41,26 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Folder Include="Assets\Plugins\FSR\Tests" />
+     <None Include="Assets\Plugins\FSR\Plugins\Roslyn\2019+\RoslynLicense.txt" />
+     <Folder Include="Assets\Plugins\FSR\Plugins\Roslyn\2021+" />
+     <None Include="Assets\Plugins\FSR\Plugins\Harmony\HarmonyLicense.txt" />
+     <Folder Include="Assets\Plugins\FSR" />
      <Folder Include="Assets\Plugins" />
+     <None Include="Assets\Plugins\FSR\Plugins\ImmersiveVrToolsCommon\ImmersiveVRToolsCommonLicense.txt" />
+     <None Include="Assets\Plugins\FSR\Plugins\Roslyn\Microsoft.CSharp.dll.IMPORTANT.txt.txt" />
+     <Folder Include="Assets\Plugins\FSR\Plugins\Harmony" />
+     <None Include="Assets\Plugins\FSR\Plugins\Roslyn\2021+\System.Runtime.CompilerServices.Unsafe.xml" />
+     <None Include="Assets\Plugins\FSR\Plugins\Roslyn\2021+\RoslynLicense.txt" />
+     <None Include="Assets\Plugins\FSR\Plugins\Roslyn\2021+\System.Reflection.Metadata.xml" />
+     <None Include="Assets\Plugins\FSR\Plugins\Harmony\net48\0Harmony.xml" />
+     <Folder Include="Assets\Plugins\FSR\Plugins\Roslyn" />
+     <Folder Include="Assets\Plugins\FSR\Plugins\Roslyn\2019+" />
+     <Folder Include="Assets\Plugins\FSR\Plugins\Harmony\net48" />
+     <None Include="Assets\Plugins\FSR\package.json" />
+     <Folder Include="Assets\Plugins\FSR\Plugins" />
+     <Folder Include="Assets\Plugins\FSR\Plugins\ImmersiveVrToolsCommon" />
+     <Folder Include="Assets\Plugins\FSR\Scripts" />
      <Reference Include="UnityEngine">
      <HintPath>F:\_UnityWorkSpace\UnityInstall\2023.1.17f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
