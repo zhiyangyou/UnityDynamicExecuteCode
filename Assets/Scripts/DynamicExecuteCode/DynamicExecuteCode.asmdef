@@ -6,14 +6,10 @@
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": true,
-    "overrideReferences": true,
-    "precompiledReferences": [
-        "Microsoft.CodeAnalysis.CSharp.dll",
-        "Microsoft.CodeAnalysis.dll",
-        "System.Collections.Immutable.FSR.dll"
-    ],
-    "autoReferenced": false,
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
