@@ -1,4 +1,4 @@
- 
+using UnityEngine;
 
 namespace Framework
 {
@@ -6,7 +6,7 @@ namespace Framework
     {
         public static void SayHello()
         {
-            //Debug.LogError($" Facade : Hello");
+            Debug.LogError($" Facade : Hello");
         }
     }
 }

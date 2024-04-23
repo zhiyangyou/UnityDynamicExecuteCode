@@ -8,43 +8,91 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using Object = System.Object;
 
 public class DynamicRoslynCompiler
 {
-    public static List<PortableExecutableReference> CollectUnityCompileEnvDll()
+    private static string[] _activeScriptCompilationDefines = null;
+
+    private static string[] ActiveScriptCompilationDefines
     {
-        var ret = new List<PortableExecutableReference>();
-        
-        return ret;
+        get
+        {
+            if (_activeScriptCompilationDefines == null)
+            {
+                _activeScriptCompilationDefines = EditorUserBuildSettings.activeScriptCompilationDefines;
+            }
+
+            return _activeScriptCompilationDefines;
+        }
+    }
+
+    private static List<string> _depDllPaths = null;
+
+    private static List<string> GetCurDomainRefs(List<string> excludeAssyNames)
+    {
+        if (_depDllPaths != null && _depDllPaths.Count > 0)
+        {
+            return _depDllPaths;
+        }
+
+        _depDllPaths = new List<string>();
+        foreach (var assembly in AppDomain.CurrentDomain
+                     .GetAssemblies() //TODO: PERF: just need to load once and cache? or get assembly based on changed file only?
+                     .Where(a => excludeAssyNames.All(assyName => !a.FullName.StartsWith(assyName))))
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(assembly.Location)) // 动态程序集会触发这个
+                {
+                    continue;
+                }
+
+                _depDllPaths.Add(assembly.Location);
+            }
+            catch (Exception)
+            {
+                Debug.LogError(
+                    $"Unable to add a reference to assembly as unable to get location or null: {assembly.FullName} when hot-reloading, this is likely dynamic assembly and won't cause issues");
+            }
+        }
+
+        return _depDllPaths;
+    }
+
+    private static PortableExecutableReference[] GetCurDomainExecutableRefs(List<string> execludeDllPaths)
+    {
+        return GetCurDomainRefs(execludeDllPaths)
+            .Select(dllPath => PortableExecutableReference.CreateFromFile(dllPath))
+            .ToArray();
     }
 
     public static void CompileAndRun(string code)
     {
-        // 解析代码为语法树
-        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(code);
+        const string asmName = "DynamicAssembly";
+        List<string> listExcludeAsmName = new List<string>()
+        {
+            asmName
+        };
+        // 宏定义
+        var parseSyntaxTree = new CSharpParseOptions();
+        parseSyntaxTree.WithPreprocessorSymbols(ActiveScriptCompilationDefines);
 
-        var refFrameWork = MetadataReference.CreateFromFile(typeof(Framework.Facade).GetTypeInfo().Assembly.Location);
-        PortableExecutableReference refNetStandard21 =
-            MetadataReference.CreateFromFile("F:\\_UnityWorkSpace\\UnityInstall\\2023.1.17f1\\Editor\\Data\\NetStandard\\ref\\2.1.0\\netstandard.dll");
+        // 解析代码为语法树
+        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(code, parseSyntaxTree);
+
+        var compileOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
+        var dllRefs = GetCurDomainExecutableRefs(listExcludeAsmName);
+
+
+        SyntaxTree[] syntaxTrees = new[] { syntaxTree };
+
         // 设置编译选项
-        CSharpCompilation compilation = CSharpCompilation.Create(
-            "DynamicAssembly",
-            new[] { syntaxTree },
-            new[]
-            {
-                MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Console).GetTypeInfo().Assembly.Location),
-                refFrameWork,
-                refNetStandard21,
-            },
-            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+        CSharpCompilation compilation = CSharpCompilation.Create(asmName, syntaxTrees, dllRefs, compileOptions);
 
         // 编译代码
         using (var ms = new MemoryStream())
         {
             EmitResult result = compilation.Emit(ms);
-
             if (!result.Success)
             {
                 // 输出编译错误
@@ -84,5 +132,6 @@ public class DynamicExecuteCode : MonoBehaviour
     void Update()
     {
         DoExecute();
+        Debug.LogError("  333  ");
     }
 }

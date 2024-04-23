@@ -9,7 +9,7 @@ PluginImporter:
   - UNITY_2019 || UNITY_2020
   isPreloaded: 0
   isOverridable: 0
-  isExplicitlyReferenced: 1
+  isExplicitlyReferenced: 0
   validateReferences: 0
   platformData:
   - first:
